@@ -1,7 +1,7 @@
 # Fantasy Basketball Assistant
 
 ## 專案結構
-
+```
 frontend/                # Next.js 前端專案 (已初始化)
   ├── src/
   │   ├── app/         # App Router
@@ -21,7 +21,7 @@ backend/               # FastAPI 後端專案
   ├── .env            # 環境變數
   ├── cert.pem        # SSL 憑證
   └── key.pem         # SSL 私鑰
-
+```
 ## 目前實作功能
 
 ### 後端 (FastAPI)
