@@ -1,0 +1,30 @@
+# Python 相關
+venv/                # 虛擬環境
+__pycache__/        # Python 快取
+*.pyc               # Python 編譯檔
+*.pyo               # Python 優化編譯檔
+*.pyd               # Python Windows DLL
+
+# 敏感資訊
+.env                # 環境變數
+*.pem               # SSL 憑證
+oauth2.json         # OAuth 設定
+
+# IDE
+.vscode/
+.idea/
+
+
+# 系統檔案
+.DS_Store
+Thumbs.db
+
+# 測試相關
+.pytest_cache/      # pytest 快取
+.coverage          # 測試覆蓋率報告
+htmlcov/           # 覆蓋率 HTML 報告
+
+# 日誌和快取
+*.log              # 日誌檔
+logs/              # 日誌目錄
+.cache/            # 快取目錄
