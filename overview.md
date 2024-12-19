@@ -28,12 +28,21 @@ backend/               # FastAPI 後端專案
 1. Yahoo OAuth 認證流程
    - [x] `/auth/yahoo/login`: 開始 OAuth 流程
    - [x] `/auth/yahoo/callback`: 處理 OAuth 回調
-   - [x] State 參數驗證
+   - [x] State 參數驗證 (使用 httpOnly cookie)
    - [x] Token 模型定義與處理
    - [x] Token 安全存儲 (httpOnly cookie)
    - [ ] Token 刷新機制
 
-2. Yahoo Fantasy API 整合
+2. 安全性機制
+   - [x] HTTPS/SSL 支援
+   - [x] CORS 設定
+   - [x] HttpOnly Cookie
+   - [x] Secure Cookie
+   - [x] SameSite 保護
+   - [x] State 參數防護
+   - [ ] CSRF 防護
+
+3. Yahoo Fantasy API 整合
    - [x] 基本的 API 呼叫功能
    - [x] 獲取用戶的 NBA 聯盟資訊
    - [x] 獲取隊伍資料
@@ -41,7 +50,7 @@ backend/               # FastAPI 後端專案
    - [ ] 獲取比賽資訊
    - [ ] 數據分析功能
 
-3. 基礎設施
+4. 基礎設施
    - [x] HTTPS/SSL 支援
    - [x] CORS 設定
    - [x] 環境變數管理

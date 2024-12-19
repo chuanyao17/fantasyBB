@@ -1,10 +1,10 @@
 """Yahoo OAuth 服務"""
-from typing import Tuple
 import secrets
 import base64
 from rauth import OAuth2Service  # type: ignore
 from fastapi import HTTPException
 import time
+from typing import Tuple
 
 from app.config import settings
 from app.models.token import Token
@@ -14,8 +14,6 @@ class YahooOAuth:
     """Yahoo OAuth 處理類"""
     AUTHORIZATION_URL = "https://api.login.yahoo.com/oauth2/request_auth"
     ACCESS_TOKEN_URL = "https://api.login.yahoo.com/oauth2/get_token"
-    
-    _states: set[str] = set()  # 類變數，用於存儲所有有效的 state
     
     def __init__(self) -> None:
         """初始化 OAuth 服務"""
@@ -32,7 +30,6 @@ class YahooOAuth:
     async def get_authorization_url(self) -> Tuple[str, str]:
         """生成授權 URL 和 state"""
         state = secrets.token_urlsafe()
-        self._states.add(state)  # 添加到有效 state 集合
         
         auth_url = self.service.get_authorize_url(
             response_type="code",
@@ -40,13 +37,6 @@ class YahooOAuth:
             state=state
         )
         return auth_url, state
-    
-    async def verify_state(self, state: str) -> bool:
-        """驗證 state 參數"""
-        if state in self._states:
-            self._states.remove(state)  # 使用後移除
-            return True
-        return False
     
     async def get_token(self, code: str) -> Token:
         """用授權碼換取 token"""
