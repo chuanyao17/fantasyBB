@@ -1,10 +1,10 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Response
 from fastapi.responses import RedirectResponse
 from app.services.oauth import YahooOAuth
 from app.models.token import Token
 
-import yahoo_fantasy_api as yfa
-from requests_oauthlib import OAuth2Session
+import yahoo_fantasy_api as yfa  # type: ignore
+from requests_oauthlib import OAuth2Session  # type: ignore
 
 class handler_v1:
     def __init__(self, token_data):
@@ -28,28 +28,34 @@ async def login(oauth: YahooOAuth = Depends()):
 async def callback(
     code: str,
     state: str,
+    response: Response,
     oauth: YahooOAuth = Depends()
 ) -> Token:
     """處理 Yahoo OAuth 回調"""
-
     try:
         if not await oauth.verify_state(state):
-            raise HTTPException(
-                status_code=400,
-                detail="Invalid state parameter"
-            )
+            raise HTTPException(status_code=400, detail="Invalid state")
+            
         token = await oauth.get_token(code)
+        
+        # 設置 cookie
+        response.set_cookie(
+            key="token",
+            value=token.model_dump_json(),
+            httponly=True,
+            secure=True,
+            samesite="lax",
+            max_age=token.expires_in
+        )
+        
         return token
     except Exception as e:
-        raise HTTPException(
-            status_code=400,
-            detail=str(e)
-        ) 
+        raise HTTPException(status_code=400, detail=str(e))
         
 
 @router.get("/show")
 async def show():
-    
+    """測試端點"""
     global lg
     try:
         

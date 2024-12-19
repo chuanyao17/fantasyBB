@@ -30,8 +30,8 @@ backend/               # FastAPI 後端專案
    - [x] `/auth/yahoo/callback`: 處理 OAuth 回調
    - [x] State 參數驗證
    - [x] Token 模型定義與處理
+   - [x] Token 安全存儲 (httpOnly cookie)
    - [ ] Token 刷新機制
-   - [ ] Token 存儲機制
 
 2. Yahoo Fantasy API 整合
    - [x] 基本的 API 呼叫功能

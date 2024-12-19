@@ -28,6 +28,7 @@ class YahooOAuth:
             base_url=None
         )
         self.session = None
+
     async def get_authorization_url(self) -> Tuple[str, str]:
         """生成授權 URL 和 state"""
         state = secrets.token_urlsafe()
