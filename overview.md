@@ -31,7 +31,7 @@ backend/               # FastAPI 後端專案
    - [x] State 參數驗證 (使用 httpOnly cookie)
    - [x] Token 模型定義與處理
    - [x] Token 安全存儲 (httpOnly cookie)
-   - [ ] Token 刷新機制
+   - [x] Token 刷新機制
 
 2. 安全性機制
    - [x] HTTPS/SSL 支援
@@ -46,6 +46,7 @@ backend/               # FastAPI 後端專案
    - [x] 基本的 API 呼叫功能
    - [x] 獲取用戶的 NBA 聯盟資訊
    - [x] 獲取隊伍資料
+   - [x] 獲取球員名單
    - [ ] 獲取球員統計數據
    - [ ] 獲取比賽資訊
    - [ ] 數據分析功能
@@ -54,7 +55,7 @@ backend/               # FastAPI 後端專案
    - [x] HTTPS/SSL 支援
    - [x] CORS 設定
    - [x] 環境變數管理
-   - [ ] 錯誤處理機制
+   - [x] 錯誤處理機制
    - [ ] 日誌系統
    - [ ] 快取機制
 
@@ -84,7 +85,7 @@ SECRET_KEY=          # 應用程式密鑰
 
 ## 下一步計畫
 1. 後端 (優先順序)
-   - [ ] 實作 Token 刷新機制
+   - [x] 實作 Token 刷新機制
    - [ ] 加強錯誤處理
    - [ ] 新增更多 Fantasy API 功能
    - [ ] 實作數據快取
