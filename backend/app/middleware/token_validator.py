@@ -2,7 +2,7 @@
 from fastapi import Request, Response
 from starlette.middleware.base import BaseHTTPMiddleware
 from app.models.token import Token
-from app.services.oauth import YahooOAuth
+from app.services.auth_service import YahooOAuth
 from fastapi.responses import JSONResponse
 
 

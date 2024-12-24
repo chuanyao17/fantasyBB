@@ -3,7 +3,7 @@ import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.middleware.token_validator import TokenValidatorMiddleware
-from app.routers import yahoo_oauth
+from app.routers import auth_routes, fantasy_routes
 
 app = FastAPI()
 
@@ -20,7 +20,9 @@ app.add_middleware(
 app.add_middleware(TokenValidatorMiddleware)
 
 # 註冊路由
-app.include_router(yahoo_oauth.router)
+app.include_router(auth_routes.router)
+app.include_router(fantasy_routes.router)
+
 
 @app.get("/")
 async def root():

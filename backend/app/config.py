@@ -1,5 +1,5 @@
 """應用程式配置"""
-from pydantic_settings import BaseSettings
+from pydantic_settings import BaseSettings  # type: ignore
 
 
 class Settings(BaseSettings):
@@ -11,6 +11,9 @@ class Settings(BaseSettings):
     
     # 安全設置
     SECRET_KEY: str
+    
+    # Fantasy API 設置
+    DEFAULT_LEAGUE_ID: str = "428.l.117327"
     
     class Config:
         """配置設置"""
