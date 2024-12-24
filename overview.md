@@ -15,9 +15,13 @@ backend/               # FastAPI 後端專案
   │   ├── models/
   │   │   └── token.py    # Token 模型
   │   ├── routers/
-  │   │   └── auth.py     # Yahoo OAuth 路由
+  │   │   ├── auth_routes.py     # Yahoo OAuth 路由
+  │   │   └── fantasy_routes.py  # Fantasy API 路由
+  │   ├── middleware/
+  │   │   └── token_validator.py  # Token 驗證中間件
   │   └── services/
-  │       └── oauth.py    # OAuth 服務實作
+  │       ├── auth_service.py    # OAuth 服務實作
+  │       └── fantasy_service.py # Fantasy API 服務
   ├── .env            # 環境變數
   ├── cert.pem        # SSL 憑證
   └── key.pem         # SSL 私鑰
@@ -32,6 +36,7 @@ backend/               # FastAPI 後端專案
    - [x] Token 模型定義與處理
    - [x] Token 安全存儲 (httpOnly cookie)
    - [x] Token 刷新機制
+   - [x] Token 驗證中間件
 
 2. 安全性機制
    - [x] HTTPS/SSL 支援
@@ -40,13 +45,14 @@ backend/               # FastAPI 後端專案
    - [x] Secure Cookie
    - [x] SameSite 保護
    - [x] State 參數防護
+   - [x] Token 自動刷新
    - [ ] CSRF 防護
 
 3. Yahoo Fantasy API 整合
    - [x] 基本的 API 呼叫功能
-   - [x] 獲取用戶的 NBA 聯盟資訊
-   - [x] 獲取隊伍資料
-   - [x] 獲取球員名單
+   - [x] 獲取用戶的 NBA 聯盟資訊 `/fantasy/leagues`
+   - [x] 獲取隊伍資料 `/fantasy/team`
+   - [x] 獲取球員名單 `/fantasy/roster`
    - [ ] 獲取球員統計數據
    - [ ] 獲取比賽資訊
    - [ ] 數據分析功能
@@ -56,6 +62,7 @@ backend/               # FastAPI 後端專案
    - [x] CORS 設定
    - [x] 環境變數管理
    - [x] 錯誤處理機制
+   - [x] 中間件系統
    - [ ] 日誌系統
    - [ ] 快取機制
 
@@ -74,7 +81,10 @@ backend/               # FastAPI 後端專案
 GET  /                         - 健康檢查
 GET  /auth/yahoo/login        - 開始 OAuth 流程
 GET  /auth/yahoo/callback     - OAuth 回調處理
-GET  /auth/yahoo/show         - 測試端點
+GET  /auth/yahoo/test-refresh - 測試 token 刷新
+GET  /fantasy/leagues         - 獲取聯盟資訊
+GET  /fantasy/team           - 獲取隊伍資訊
+GET  /fantasy/roster         - 獲取球員名單
 
 ## 環境變數
 
@@ -86,10 +96,12 @@ SECRET_KEY=          # 應用程式密鑰
 ## 下一步計畫
 1. 後端 (優先順序)
    - [x] 實作 Token 刷新機制
+   - [x] 實作 Token 驗證中間件
    - [ ] 加強錯誤處理
    - [ ] 新增更多 Fantasy API 功能
    - [ ] 實作數據快取
    - [ ] 加入日誌系統
+   - [ ] 實作 CSRF 防護
 
 2. 前端 (優先順序)
    - [ ] 實作 OAuth 流程 UI
