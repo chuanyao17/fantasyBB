@@ -1,5 +1,7 @@
 """Yahoo Fantasy API 路由"""
 from fastapi import APIRouter, HTTPException, Request
+from typing import List, Dict, Any, Union
+
 from app.services.fantasy_service import FantasyService
 from app.models.token import Token
 
@@ -45,5 +47,22 @@ async def get_roster(request: Request):
         token = Token.model_validate_json(token_str)
         fantasy = FantasyService(token)
         return await fantasy.get_roster()
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+
+@router.get("/matchups")
+async def get_matchups(
+    request: Request,
+    week: Union[int, None] = None
+) -> List[Dict[str, Any]]:
+    """獲取比賽數據"""
+    try:
+        token_str = request.cookies.get("token")
+        if not token_str:
+            raise HTTPException(status_code=401, detail="No token found")
+        token = Token.model_validate_json(token_str)
+        fantasy = FantasyService(token)
+        return await fantasy.get_matchups_scores(week)
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e)) 

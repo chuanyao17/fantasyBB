@@ -13,7 +13,7 @@ class Settings(BaseSettings):
     SECRET_KEY: str
     
     # Fantasy API 設置
-    DEFAULT_LEAGUE_ID: str = "428.l.117327"
+    DEFAULT_LEAGUE_ID: str = "454.l.83660"
     
     class Config:
         """配置設置"""
