@@ -53,8 +53,8 @@ backend/               # FastAPI 後端專案
    - [x] 獲取用戶的 NBA 聯盟資訊 `/fantasy/leagues`
    - [x] 獲取隊伍資料 `/fantasy/team`
    - [x] 獲取球員名單 `/fantasy/roster`
+   - [x] 獲取每週比賽數據 `/fantasy/matchups`
    - [ ] 獲取球員統計數據
-   - [ ] 獲取比賽資訊
    - [ ] 數據分析功能
 
 4. 基礎設施
@@ -85,6 +85,8 @@ GET  /auth/yahoo/test-refresh - 測試 token 刷新
 GET  /fantasy/leagues         - 獲取聯盟資訊
 GET  /fantasy/team           - 獲取隊伍資訊
 GET  /fantasy/roster         - 獲取球員名單
+GET  /fantasy/matchups         - 獲取比賽數據
+GET  /fantasy/matchups?week=1  - 獲取指定週次的比賽數據
 
 ## 環境變數
 
