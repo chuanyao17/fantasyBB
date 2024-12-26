@@ -9,8 +9,12 @@ export default {
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        'retro': {
+          primary: '#f4d03f',
+          secondary: '#5a6988',
+          dark: '#1a1c2c',
+          light: '#ffffff',
+        }
       },
     },
   },
