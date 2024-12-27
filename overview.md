@@ -72,6 +72,7 @@ backend/               # FastAPI 後端專案
    - [x] App Router 設置
    - [x] TypeScript 整合
    - [x] TailwindCSS 設置
+   - [x] HTTPS 支援
    - [x] 字體設置 (Press Start 2P)
 
 2. UI 設計與實作
@@ -80,7 +81,7 @@ backend/               # FastAPI 後端專案
    - [x] 導航欄組件
    - [x] 首頁布局
    - [x] 按鈕組件
-   - [ ] 登入流程 UI
+   - [x] 登入流程 UI
    - [ ] Dashboard 布局
    - [ ] 響應式設計優化
 
@@ -91,7 +92,7 @@ backend/               # FastAPI 後端專案
    - [ ] 球員名單 (/dashboard/roster)
 
 4. 功能組件
-   - [ ] OAuth 流程處理
+   - [x] OAuth 流程處理
    - [ ] API 整合
    - [ ] 數據展示元件
    - [ ] 錯誤處理
@@ -142,10 +143,8 @@ SECRET_KEY=          # 應用程式密鑰
    - [ ] 加入日誌系統
    - [ ] 實作 CSRF 防護
 
-2. 前端 (優先順序)
-   - [ ] 實作 OAuth 流程 UI
-   - [ ] 設計主要介面
-   - [ ] 整合後端 API
+2. 前端
+   - [ ] 整合 Fantasy API
    - [ ] 實作數據視覺化
    - [ ] 優化使用者體驗
 

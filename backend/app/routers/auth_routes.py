@@ -36,10 +36,9 @@ async def login(oauth: YahooOAuth = Depends()):
 async def callback(
     code: str,
     state: str,
-    response: Response,
     oauth: YahooOAuth = Depends(),
     oauth_state: str | None = Cookie(None)
-) -> Token:
+):
     """處理 Yahoo OAuth 回調"""
     if not oauth_state or oauth_state != state:
         raise HTTPException(status_code=400, detail="Invalid state")
@@ -47,8 +46,15 @@ async def callback(
     try:
         token = await oauth.get_token(code)
         
-        response.delete_cookie(key="oauth_state", secure=True, httponly=True)
-        response.set_cookie(
+        # 創建重定向響應
+        redirect_response = RedirectResponse(
+            url="https://localhost:3000",
+            status_code=303
+        )
+        
+        # 設置 cookies
+        redirect_response.delete_cookie(key="oauth_state", secure=True, httponly=True)
+        redirect_response.set_cookie(
             key="token",
             value=token.model_dump_json(),
             httponly=True,
@@ -57,7 +63,8 @@ async def callback(
             max_age=token.expires_in
         )
         
-        return token
+        return redirect_response
+        
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
@@ -85,4 +92,15 @@ async def test_refresh(request: Request, response: Response):
         return {"message": "Token has been modified to appear expired"}
         
     except Exception as e:
-        raise HTTPException(status_code=400, detail=str(e)) 
+        raise HTTPException(status_code=400, detail=str(e))
+
+
+@router.get("/verify")
+async def verify_token(request: Request):
+    """檢查是否有 token cookie 目前是直接透過middleware檢查 未來可能需要調整"""
+    # print("verify_token")
+    # token_str = request.cookies.get("token")
+    # if not token_str:
+    #     raise HTTPException(status_code=401)
+    # return {"status": "valid"} 
+    pass

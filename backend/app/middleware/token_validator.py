@@ -17,9 +17,9 @@ class TokenValidatorMiddleware(BaseHTTPMiddleware):
             return await call_next(request)
 
         try:
-            # 從 cookie 獲取 token
             token_str = request.cookies.get("token")
             if not token_str:
+                print("No token found")
                 return Response(status_code=401)
 
             token = Token.model_validate_json(token_str)
