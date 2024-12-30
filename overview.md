@@ -74,6 +74,8 @@ backend/               # FastAPI 後端專案
    - [x] TailwindCSS 設置
    - [x] HTTPS 支援
    - [x] 字體設置 (Press Start 2P)
+   - [x] 環境變數配置
+   - [x] 移除重複的字體設置
 
 2. UI 設計與實作
    - [x] 像素遊戲風格設計
@@ -82,6 +84,8 @@ backend/               # FastAPI 後端專案
    - [x] 首頁布局
    - [x] 按鈕組件
    - [x] 登入流程 UI
+   - [x] 組件拆分 (LoginButton)
+   - [x] Server/Client Component 分離
    - [ ] Dashboard 布局
    - [ ] 響應式設計優化
 
@@ -93,6 +97,8 @@ backend/               # FastAPI 後端專案
 
 4. 功能組件
    - [x] OAuth 流程處理
+   - [x] Server Component 中的 token 驗證
+   - [x] 移除 hard-coded URLs
    - [ ] API 整合
    - [ ] 數據展示元件
    - [ ] 錯誤處理
@@ -132,6 +138,8 @@ YAHOO_CLIENT_ID=     # Yahoo API Client ID
 YAHOO_CLIENT_SECRET= # Yahoo API Client Secret
 YAHOO_CALLBACK_URL=  # OAuth 回調 URL
 SECRET_KEY=          # 應用程式密鑰
+FRONTEND_URL=       # 前端 URL (後端配置)
+NEXT_PUBLIC_API_URL= # 後端 API URL (前端配置)
 
 ## 下一步計畫
 1. 後端 (優先順序)

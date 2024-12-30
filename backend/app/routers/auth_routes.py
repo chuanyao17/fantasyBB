@@ -10,6 +10,7 @@ from fastapi import (
 from fastapi.responses import RedirectResponse
 from app.services.auth_service import YahooOAuth
 from app.models.token import Token
+from app.config import settings
 
 
 router = APIRouter(prefix="/auth/yahoo", tags=["auth"])
@@ -48,7 +49,7 @@ async def callback(
         
         # 創建重定向響應
         redirect_response = RedirectResponse(
-            url="https://localhost:3000",
+            url=settings.FRONTEND_URL,
             status_code=303
         )
         

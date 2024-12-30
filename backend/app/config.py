@@ -15,6 +15,9 @@ class Settings(BaseSettings):
     # Fantasy API 設置
     DEFAULT_LEAGUE_ID: str = "454.l.83660"
     
+    # 前端 URL 設置
+    FRONTEND_URL: str = "https://localhost:3000"
+    
     class Config:
         """配置設置"""
         env_file = ".env"

@@ -1,27 +1,25 @@
-"use client"
+// app/page.tsx (Server Component)
+import { cookies } from "next/headers";
+import LoginButton from "@/components/LoginButton"; // 修正引入路徑
 
-import { Press_Start_2P } from 'next/font/google'
-import { useState, useEffect } from 'react'
+export default async function Home() {
+  // 1. 在服務器端讀取 Cookie
+  const cookieStore = await cookies();
+  const token = cookieStore.get("token")?.value;
 
-const pressStart2P = Press_Start_2P({
-  weight: '400',
-  subsets: ['latin'],
-})
+  let isAuthenticated = false;
 
-export default function Home() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
-  
-  useEffect(() => {
-    fetch('https://localhost:8000/auth/yahoo/verify', {
-      credentials: 'include'
-    })
-    .then(res => {
-      setIsAuthenticated(res.ok)
-    })
-  }, [])
-
-  const handleLogin = () => {
-    window.location.href = 'https://localhost:8000/auth/yahoo/login'
+  // 2. 在服務器端驗證 token
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/yahoo/verify`, {
+      headers: {
+        Cookie: `token=${token}`,  // 將 token 傳給後端驗證
+      },
+      cache: "no-store",
+    });
+    isAuthenticated = res.ok;
+  } catch (error) {
+    console.error("Error verifying authentication:", error);
   }
 
   return (
@@ -31,20 +29,17 @@ export default function Home() {
           <h1 className="text-xl mb-12 text-yellow-300 pixel-text text-center">
             Fantasy Basketball Assistant
           </h1>
-          
+
           <div className="menu-container">
             {!isAuthenticated ? (
-              <button onClick={handleLogin} className="pixel-button w-full py-3 px-4 text-white hover:text-yellow-300">
-                > Login with Yahoo
-              </button>
+              // 這裡就是純粹引用 Client Component
+              <LoginButton />
             ) : (
-              <div className="text-white text-center">
-                Welcome back!
-              </div>
+              <div className="text-white text-center">Welcome back!</div>
             )}
           </div>
         </div>
       </div>
     </main>
-  )
+  );
 }
