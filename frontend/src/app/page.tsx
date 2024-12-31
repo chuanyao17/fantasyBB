@@ -32,10 +32,11 @@ export default async function Home() {
 
           <div className="menu-container">
             {!isAuthenticated ? (
-              // 這裡就是純粹引用 Client Component
               <LoginButton />
             ) : (
-              <div className="text-white text-center">Welcome back!</div>
+              <div className="text-white text-center text-sm pixel-text">
+                Welcome back!
+              </div>
             )}
           </div>
         </div>

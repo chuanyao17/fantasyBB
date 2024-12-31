@@ -70,14 +70,16 @@ class FantasyService:
     
     async def get_matchups_scores(
         self,
-        week: Union[int, None] = None
+        week: Union[int, None] = None,
+        league_id: Union[str, None] = None
     ) -> List[Dict[str, Any]]:
         """獲取每週比賽數據"""
         try:
-            league = self.game.to_league(settings.DEFAULT_LEAGUE_ID)
+            league_id = league_id or settings.DEFAULT_LEAGUE_ID
+            league = self.game.to_league(league_id)
             
             if not week:
-                week = league.current_week() - 1
+                week = await self.get_current_week(league_id) - 1
                 
             matchups = league.matchups(week)
             matchups_data = []
@@ -135,3 +137,18 @@ class FantasyService:
             "19": "TO"
         }
         return stat_map.get(stat_id, stat_id) 
+    
+    async def get_current_week(
+        self,
+        league_id: Union[str, None] = None
+    ) -> int:
+        """獲取當前週次"""
+        try:
+            league_id = league_id or settings.DEFAULT_LEAGUE_ID
+            league = self.game.to_league(league_id)
+            return league.current_week()
+        except Exception as e:
+            raise HTTPException(
+                status_code=500,
+                detail=f"Failed to get current week: {str(e)}"
+            ) 

@@ -53,3 +53,27 @@
 .menu-container button {
   transition: all 0.2s ease;
 }
+
+@font-face {
+  font-family: 'Zpix';
+  src: url('/fonts/zpix.ttf') format('truetype');
+  font-display: swap;
+}
+.font-pixel-zh {
+  font-family: 'Zpix', monospace;
+  image-rendering: pixelated;
+  text-shadow: 2px 2px 0 #000;
+  font-size: 16px;
+  line-height: 1.5;
+  letter-spacing: 1px;
+  font-weight: 600;
+  -webkit-font-smoothing: none;
+  -moz-osx-font-smoothing: none;
+}
+
+/* 針對標題的特殊樣式 */
+.font-pixel-zh.text-xl {
+  font-size: 24px;
+  letter-spacing: 2px;
+}
+

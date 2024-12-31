@@ -54,6 +54,7 @@ backend/               # FastAPI 後端專案
    - [x] 獲取隊伍資料 `/fantasy/team`
    - [x] 獲取球員名單 `/fantasy/roster`
    - [x] 獲取每週比賽數據 `/fantasy/matchups`
+   - [x] 獲取當前週次 `/fantasy/current-week`
    - [ ] 獲取球員統計數據
    - [ ] 數據分析功能
 
@@ -75,7 +76,7 @@ backend/               # FastAPI 後端專案
    - [x] HTTPS 支援
    - [x] 字體設置 (Press Start 2P)
    - [x] 環境變數配置
-   - [x] 移除重複的字體設置
+   - [x] 中文像素字體支援 (Zpix)
 
 2. UI 設計與實作
    - [x] 像素遊戲風格設計
@@ -86,21 +87,21 @@ backend/               # FastAPI 後端專案
    - [x] 登入流程 UI
    - [x] 組件拆分 (LoginButton)
    - [x] Server/Client Component 分離
-   - [ ] Dashboard 布局
+   - [x] Matchups 頁面布局
+   - [ ] Roster 頁面布局
    - [ ] 響應式設計優化
 
 3. 頁面路由
    - [x] 首頁 (/)
-   - [ ] 儀表板 (/dashboard)
-   - [ ] 比賽數據 (/dashboard/matchups)
-   - [ ] 球員名單 (/dashboard/roster)
+   - [x] Matchups (/dashboard/matchups)
+   - [ ] Roster (/dashboard/roster)
 
 4. 功能組件
    - [x] OAuth 流程處理
    - [x] Server Component 中的 token 驗證
    - [x] 移除 hard-coded URLs
-   - [ ] API 整合
-   - [ ] 數據展示元件
+   - [x] Matchups 數據展示
+   - [ ] Roster 數據展示
    - [ ] 錯誤處理
    - [ ] 載入狀態
    - [ ] 認證狀態管理
@@ -110,6 +111,7 @@ backend/               # FastAPI 後端專案
    - [x] 像素風格按鈕
    - [x] 像素風格文字
    - [x] 像素風格邊框
+   - [x] 中英文字體統一
    - [ ] 深色/淺色模式
    - [ ] 動畫效果
 
@@ -131,6 +133,7 @@ GET  /fantasy/team           - 獲取隊伍資訊
 GET  /fantasy/roster         - 獲取球員名單
 GET  /fantasy/matchups         - 獲取比賽數據
 GET  /fantasy/matchups?week=1  - 獲取指定週次的比賽數據
+GET  /fantasy/current-week     - 獲取當前週次
 
 ## 環境變數
 
@@ -152,7 +155,8 @@ NEXT_PUBLIC_API_URL= # 後端 API URL (前端配置)
    - [ ] 實作 CSRF 防護
 
 2. 前端
-   - [ ] 整合 Fantasy API
+   - [x] 整合 Matchups API
+   - [ ] 整合 Roster API
    - [ ] 實作數據視覺化
    - [ ] 優化使用者體驗
 

@@ -65,4 +65,18 @@ async def get_matchups(
         fantasy = FantasyService(token)
         return await fantasy.get_matchups_scores(week)
     except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+
+@router.get("/current-week")
+async def get_current_week(request: Request) -> int:
+    """獲取當前週次"""
+    try:
+        token_str = request.cookies.get("token")
+        if not token_str:
+            raise HTTPException(status_code=401, detail="No token found")
+        token = Token.model_validate_json(token_str)
+        fantasy = FantasyService(token)
+        return await fantasy.get_current_week()
+    except Exception as e:
         raise HTTPException(status_code=400, detail=str(e)) 

@@ -39,7 +39,7 @@ class TokenValidatorMiddleware(BaseHTTPMiddleware):
                     httponly=True,
                     secure=True,
                     samesite="lax",
-                    max_age=new_token.expires_in
+                    max_age=2592000  # 30 天
                 )
                 
                 return response

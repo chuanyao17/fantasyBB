@@ -61,7 +61,7 @@ async def callback(
             httponly=True,
             secure=True,
             samesite="lax",
-            max_age=token.expires_in
+            max_age=2592000  # 30 天
         )
         
         return redirect_response
@@ -87,7 +87,7 @@ async def test_refresh(request: Request, response: Response):
             httponly=True,
             secure=True,
             samesite="lax",
-            max_age=3600
+            max_age=2592000  # 30 天
         )
         
         return {"message": "Token has been modified to appear expired"}
