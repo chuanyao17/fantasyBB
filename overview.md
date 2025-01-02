@@ -32,6 +32,7 @@ backend/               # FastAPI 後端專案
 1. Yahoo OAuth 認證流程
    - [x] `/auth/yahoo/login`: 開始 OAuth 流程
    - [x] `/auth/yahoo/callback`: 處理 OAuth 回調
+   - [x] `/auth/yahoo/logout`: 登出並清除 token
    - [x] State 參數驗證 (使用 httpOnly cookie)
    - [x] Token 模型定義與處理
    - [x] Token 安全存儲 (httpOnly cookie)
@@ -101,6 +102,7 @@ backend/               # FastAPI 後端專案
    - [x] Server Component 中的 token 驗證
    - [x] 移除 hard-coded URLs
    - [x] Matchups 數據展示
+   - [x] 登出功能
    - [ ] Roster 數據展示
    - [ ] 錯誤處理
    - [ ] 載入狀態
@@ -128,6 +130,7 @@ GET  /                         - 健康檢查
 GET  /auth/yahoo/login        - 開始 OAuth 流程
 GET  /auth/yahoo/callback     - OAuth 回調處理
 GET  /auth/yahoo/test-refresh - 測試 token 刷新
+GET  /auth/yahoo/logout       - 登出並清除 token
 GET  /fantasy/leagues         - 獲取聯盟資訊
 GET  /fantasy/team           - 獲取隊伍資訊
 GET  /fantasy/roster         - 獲取球員名單

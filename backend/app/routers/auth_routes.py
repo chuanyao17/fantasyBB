@@ -99,9 +99,16 @@ async def test_refresh(request: Request, response: Response):
 @router.get("/verify")
 async def verify_token(request: Request):
     """檢查是否有 token cookie 目前是直接透過middleware檢查 未來可能需要調整"""
-    # print("verify_token")
+    print("verify_token")
     # token_str = request.cookies.get("token")
     # if not token_str:
     #     raise HTTPException(status_code=401)
     # return {"status": "valid"} 
     pass
+
+
+@router.get("/logout")
+async def logout(response: Response):
+    """登出並清除 token"""
+    response.delete_cookie(key="token", secure=True, httponly=True)
+    return {"status": "logged out"}

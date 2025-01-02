@@ -48,6 +48,7 @@ class TokenValidatorMiddleware(BaseHTTPMiddleware):
             
         except Exception:
             # 返回 401，讓前端處理重定向
+            print("exception")
             return JSONResponse(
                 status_code=401,
                 content={

@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import LogoutButton from '@/components/LogoutButton'
 
 export default function Navbar() {
   const pathname = usePathname()
@@ -37,6 +38,9 @@ export default function Navbar() {
                 > Roster
               </Link>
             </div>
+          </div>
+          <div className="flex items-center">
+            <LogoutButton />
           </div>
         </div>
       </div>
