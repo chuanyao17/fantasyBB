@@ -7,9 +7,11 @@ async function getMatchupsData(): Promise<Matchup[] | null> {
 
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/fantasy/matchups`, {
-      headers: {
-        Cookie: `token=${token}`,
-      },
+      ... (token && {
+        headers: {
+          Cookie: `token=${token}`,
+        },
+      }),
       cache: "no-store",
     });
 

@@ -12,9 +12,11 @@ export default async function Home() {
   // 2. 在服務器端驗證 token
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/yahoo/verify`, {
-      headers: {
-        Cookie: `token=${token}`,  // 將 token 傳給後端驗證
-      },
+      ... (token && {
+        headers: {
+          Cookie: `token=${token}`,  // 將 token 傳給後端驗證
+        },
+      }),
       cache: "no-store",
     });
     isAuthenticated = res.ok;
