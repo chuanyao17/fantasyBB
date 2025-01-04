@@ -15,5 +15,5 @@ class Token(BaseModel):
     def is_expired(self) -> bool:
         """檢查 token 是否過期"""
         current_time = time.time()
-        return current_time > (self.token_time + self.expires_in)
+        return current_time > (self.token_time + self.expires_in - 60)
   

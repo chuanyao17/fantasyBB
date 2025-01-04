@@ -88,6 +88,7 @@ backend/               # FastAPI 後端專案
    - [x] 登入流程 UI
    - [x] 組件拆分 (LoginButton)
    - [x] Server/Client Component 分離
+   - [x] 導航欄認證狀態同步
    - [x] Matchups 頁面布局
    - [ ] Roster 頁面布局
    - [ ] 響應式設計優化
@@ -103,10 +104,11 @@ backend/               # FastAPI 後端專案
    - [x] 移除 hard-coded URLs
    - [x] Matchups 數據展示
    - [x] 登出功能
+   - [x] 登出後自動導航到首頁
    - [ ] Roster 數據展示
    - [ ] 錯誤處理
    - [ ] 載入狀態
-   - [ ] 認證狀態管理
+   - [x] 認證狀態管理 (layout.tsx)
 
 5. 樣式主題
    - [x] 像素風格背景
@@ -159,6 +161,7 @@ NEXT_PUBLIC_API_URL= # 後端 API URL (前端配置)
 
 2. 前端
    - [x] 整合 Matchups API
+   - [x] 優化認證流程
    - [ ] 整合 Roster API
    - [ ] 實作數據視覺化
    - [ ] 優化使用者體驗

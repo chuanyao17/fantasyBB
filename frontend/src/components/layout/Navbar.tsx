@@ -4,7 +4,11 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import LogoutButton from '@/components/LogoutButton'
 
-export default function Navbar() {
+interface NavbarProps {
+  isAuthenticated: boolean;
+}
+
+export default function Navbar({ isAuthenticated }: NavbarProps) {
   const pathname = usePathname()
 
   return (
@@ -40,7 +44,7 @@ export default function Navbar() {
             </div>
           </div>
           <div className="flex items-center">
-            <LogoutButton />
+            {isAuthenticated && <LogoutButton />}
           </div>
         </div>
       </div>
