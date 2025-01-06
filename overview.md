@@ -90,6 +90,7 @@ backend/               # FastAPI 後端專案
    - [x] Server/Client Component 分離
    - [x] 導航欄認證狀態同步
    - [x] Matchups 頁面布局
+   - [x] Matchups 表格布局
    - [ ] Roster 頁面布局
    - [ ] 響應式設計優化
 
@@ -105,6 +106,7 @@ backend/               # FastAPI 後端專案
    - [x] Matchups 數據展示
    - [x] 登出功能
    - [x] 登出後自動導航到首頁
+   - [x] Matchups 數據視覺化（漸層色表格）
    - [ ] Roster 數據展示
    - [ ] 錯誤處理
    - [ ] 載入狀態
@@ -162,8 +164,8 @@ NEXT_PUBLIC_API_URL= # 後端 API URL (前端配置)
 2. 前端
    - [x] 整合 Matchups API
    - [x] 優化認證流程
+   - [x] 實作數據視覺化（Matchups）
    - [ ] 整合 Roster API
-   - [ ] 實作數據視覺化
    - [ ] 優化使用者體驗
 
 3. 部署準備
