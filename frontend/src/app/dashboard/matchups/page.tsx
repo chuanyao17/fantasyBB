@@ -1,5 +1,6 @@
 import { cookies } from "next/headers";
 import { Matchup } from "@/types/matchups";
+import MatchupComparison from "@/components/MatchupComparison";
 
 /**
  * 從後端取得資料
@@ -100,44 +101,26 @@ export default async function MatchupsPage() {
     );
   }
 
-  // 要顯示的欄位 (可自行調整)
   const columns = ["FG%", "FT%", "3PTM", "PTS", "REB", "AST", "ST", "BLK", "TO"];
-
-  // 計算各欄位的 min/max
   const minMaxMap = getMinMaxMap(matchupsData, columns);
 
   return (
     <main className="min-h-screen pixel-bg">
-      <div className="font-[family-name:var(--font-press-start)] container mx-auto pt-20 px-4">
+      <div className="font-[family-name:var(--font-press-start)] container mx-auto pt-20 pb-32 px-4">
         <h1 className="text-xl mb-12 text-yellow-300 pixel-text text-center">
           Matchups
         </h1>
 
-        {/* overflow-x-auto + min-w 確保可一次顯示所有欄位 */}
+        {/* 原有的表格 */}
         <div className="overflow-x-auto mx-auto">
           <table className="table-auto border-collapse min-w-[900px] border border-gray-700 mx-auto">
             <thead className="bg-slate-900">
               <tr>
-                <th
-                  className="
-                    border border-gray-700 
-                    px-4 py-2
-                    text-white text-sm pixel-text 
-                    font-pixel-zh
-                  "
-                >
+                <th className="border border-gray-700 px-4 py-2 text-white text-sm pixel-text font-pixel-zh">
                   Name
                 </th>
                 {columns.map((col) => (
-                  <th
-                    key={col}
-                    className="
-                      border border-gray-700
-                      px-4 py-2
-                      text-white text-sm pixel-text
-                      font-pixel-zh
-                    "
-                  >
+                  <th key={col} className="border border-gray-700 px-4 py-2 text-white text-sm pixel-text font-pixel-zh">
                     {col}
                   </th>
                 ))}
@@ -146,35 +129,17 @@ export default async function MatchupsPage() {
             <tbody>
               {matchupsData.map((match, index) => (
                 <tr key={index} className="text-center">
-                  {/* 隊伍名稱 */}
-                  <td
-                    className="
-                      border border-gray-700 
-                      px-4 py-2
-                      text-white text-sm pixel-text 
-                      font-pixel-zh
-                    "
-                  >
+                  <td className="border border-gray-700 px-4 py-2 text-white text-sm pixel-text font-pixel-zh">
                     {match.name}
                   </td>
-
-                  {/* 依序渲染各數據欄位 */}
                   {columns.map((col) => {
                     const numericVal = parseFloat(match.stats[col] || "0");
-                    // TO 欄位 => reversed = true (越高越紅)
-                    const isReversed = col === "TO";
-                    const bgColor = colorScale(numericVal, minMaxMap[col], isReversed);
+                    const bgColor = colorScale(numericVal, minMaxMap[col], col === "TO");
 
                     return (
                       <td
                         key={col}
-                        className="
-                          border border-gray-700
-                          px-4 py-2
-                          text-sm pixel-text
-                          font-pixel-zh
-                          text-white
-                        "
+                        className="border border-gray-700 px-4 py-2 text-sm pixel-text font-pixel-zh text-white"
                         style={{ backgroundColor: bgColor }}
                       >
                         {match.stats[col]}
@@ -185,6 +150,14 @@ export default async function MatchupsPage() {
               ))}
             </tbody>
           </table>
+        </div>
+
+        {/* 新增的比較表格 */}
+        <div className="mt-12">
+          <MatchupComparison 
+            matchupsData={matchupsData} 
+            columns={columns} 
+          />
         </div>
       </div>
     </main>
