@@ -21,9 +21,25 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // 檢查 token 是否存在
+  // 檢查 token 是否存在且有效
   const cookieStore = await cookies();
-  const isAuthenticated = !!cookieStore.get("token")?.value;
+  const token = cookieStore.get("token")?.value;
+  
+  let isAuthenticated = false;
+  
+  if (token) {
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/yahoo/verify`, {
+        headers: {
+          Cookie: `token=${token}`,
+        },
+        cache: 'no-store'
+      });
+      isAuthenticated = res.ok;
+    } catch (error) {
+      console.error("Error verifying token:", error);
+    }
+  }
 
   return (
     <html lang="en">

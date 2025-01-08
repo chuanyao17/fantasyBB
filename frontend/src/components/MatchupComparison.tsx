@@ -19,7 +19,7 @@ export default function MatchupComparison({ matchupsData, columns }: MatchupComp
     <>
       {/* 比較表格說明 */}
       <div className="mb-4 text-center">
-        <p className="text-slate-300 text-sm pixel-text space-y-2">
+        <div className="text-slate-300 text-sm pixel-text space-y-2">
           <div>
             <span className="text-yellow-300">Compare Mode: </span>
             <span className="text-slate-200">Select a team.</span>
@@ -34,7 +34,7 @@ export default function MatchupComparison({ matchupsData, columns }: MatchupComp
               indicates how many categories the selected team wins, loses, or ties against each opponent.
             </span>
           </div>
-        </p>
+        </div>
       </div>
 
       {/* 比較表格 */}

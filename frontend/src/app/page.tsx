@@ -9,19 +9,18 @@ export default async function Home() {
 
   let isAuthenticated = false;
 
-  // 2. 在服務器端驗證 token
-  try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/yahoo/verify`, {
-      ... (token && {
+  if (token) {
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/yahoo/verify`, {
         headers: {
-          Cookie: `token=${token}`,  // 將 token 傳給後端驗證
+          Cookie: `token=${token}`,
         },
-      }),
-      cache: "no-store",
-    });
-    isAuthenticated = res.ok;
-  } catch (error) {
-    console.error("Error verifying authentication:", error);
+        cache: 'no-store'
+      });
+      isAuthenticated = res.ok;
+    } catch (error) {
+      console.error("Error verifying token:", error);
+    }
   }
 
   return (

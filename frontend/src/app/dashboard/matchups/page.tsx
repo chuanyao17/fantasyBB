@@ -10,12 +10,12 @@ async function getMatchupsData(): Promise<Matchup[] | null> {
   const token = cookieStore.get("token")?.value;
 
   try {
+    if (!token) return null;
+
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/fantasy/matchups`, {
-      ...(token && {
-        headers: {
-          Cookie: `token=${token}`,
-        },
-      }),
+      headers: {
+        Cookie: `token=${token}`,
+      },
       cache: "no-store",
     });
 

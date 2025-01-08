@@ -29,17 +29,17 @@ export default function Navbar({ isAuthenticated }: NavbarProps) {
                 href="/dashboard/matchups" 
                 className={`${
                   pathname === '/dashboard/matchups' ? 'text-yellow-300' : 'text-white hover:text-yellow-300'
-                } pixel-text text-sm`}
+                } pixel-text text-sm ${!isAuthenticated && 'text-gray-500 cursor-not-allowed pointer-events-none'}`}
               >
                 > Matchups
               </Link>
               <Link 
-                href="/dashboard/roster" 
+                href="/demo" 
                 className={`${
-                  pathname === '/dashboard/roster' ? 'text-yellow-300' : 'text-white hover:text-yellow-300'
+                  pathname === '/demo' ? 'text-yellow-300' : 'text-white hover:text-yellow-300'
                 } pixel-text text-sm`}
               >
-                > Roster
+                > Demo
               </Link>
             </div>
           </div>
