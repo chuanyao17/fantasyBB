@@ -92,13 +92,16 @@ backend/               # FastAPI 後端專案
    - [x] Matchups 頁面布局
    - [x] Matchups 表格布局
    - [x] Matchups 比較表格布局
-   - [x] 多層次顏色系統
+   - [x] 比較模式說明文字排版
+   - [x] 比較模式顏色層次優化
+   - [x] Demo 頁面布局
    - [ ] Roster 頁面布局
    - [ ] 響應式設計優化
 
 3. 頁面路由
    - [x] 首頁 (/)
    - [x] Matchups (/dashboard/matchups)
+   - [x] Demo (/demo)
    - [ ] Roster (/dashboard/roster)
 
 4. 功能組件

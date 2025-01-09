@@ -27,9 +27,16 @@ export default function Navbar({ isAuthenticated }: NavbarProps) {
             <div className="font-[family-name:var(--font-press-start)] hidden md:flex space-x-8">
               <Link 
                 href="/dashboard/matchups" 
-                className={`${
-                  pathname === '/dashboard/matchups' ? 'text-yellow-300' : 'text-white hover:text-yellow-300'
-                } pixel-text text-sm ${!isAuthenticated && 'text-gray-500 cursor-not-allowed pointer-events-none'}`}
+                className={`
+                  pixel-text 
+                  text-sm 
+                  ${!isAuthenticated 
+                    ? 'text-gray-500 cursor-not-allowed pointer-events-none' 
+                    : pathname === '/dashboard/matchups'
+                      ? 'text-yellow-300'
+                      : 'text-white hover:text-yellow-300'
+                  }
+                `}
               >
                 > Matchups
               </Link>
