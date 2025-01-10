@@ -54,10 +54,8 @@ backend/               # FastAPI 後端專案
    - [x] 獲取用戶的 NBA 聯盟資訊 `/fantasy/leagues`
    - [x] 獲取隊伍資料 `/fantasy/team`
    - [x] 獲取球員名單 `/fantasy/roster`
-   - [x] 獲取每週比賽數據 `/fantasy/matchups`
+   - [x] 獲取每週比賽數據視覺化、比較 `/fantasy/matchups`
    - [x] 獲取當前週次 `/fantasy/current-week`
-   - [ ] 獲取球員統計數據
-   - [ ] 數據分析功能
 
 4. 基礎設施
    - [x] HTTPS/SSL 支援
@@ -95,14 +93,12 @@ backend/               # FastAPI 後端專案
    - [x] 比較模式說明文字排版
    - [x] 比較模式顏色層次優化
    - [x] Demo 頁面布局
-   - [ ] Roster 頁面布局
    - [ ] 響應式設計優化
 
 3. 頁面路由
    - [x] 首頁 (/)
    - [x] Matchups (/dashboard/matchups)
    - [x] Demo (/demo)
-   - [ ] Roster (/dashboard/roster)
 
 4. 功能組件
    - [x] OAuth 流程處理
@@ -114,7 +110,6 @@ backend/               # FastAPI 後端專案
    - [x] Matchups 數據視覺化（漸層色表格）
    - [x] Matchups 比較功能
    - [x] 比較模式說明文字
-   - [ ] Roster 數據展示
    - [ ] 錯誤處理
    - [ ] 載入狀態
    - [x] 認證狀態管理 (layout.tsx)
@@ -162,18 +157,19 @@ NEXT_PUBLIC_API_URL= # 後端 API URL (前端配置)
 1. 後端 (優先順序)
    - [x] 實作 Token 刷新機制
    - [x] 實作 Token 驗證中間件
-   - [ ] 加強錯誤處理
-   - [ ] 新增更多 Fantasy API 功能
+   - [ ] 加強錯誤處理 (切換帳號的錯誤處理)
    - [ ] 實作數據快取
    - [ ] 加入日誌系統
    - [ ] 實作 CSRF 防護
+   - [ ] 新增更多 Fantasy API 功能
 
 2. 前端
    - [x] 整合 Matchups API
    - [x] 優化認證流程
    - [x] 實作數據視覺化（Matchups）
    - [x] 實作比較功能（Matchups）
-   - [ ] 整合 Roster API
+   - [ ] 實作選聯盟功能（Matchups）
+   - [ ] 實作選周次功能（Matchups）
    - [ ] 優化使用者體驗
 
 3. 部署準備
