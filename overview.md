@@ -93,6 +93,7 @@ backend/               # FastAPI 後端專案
    - [x] 比較模式說明文字排版
    - [x] 比較模式顏色層次優化
    - [x] Demo 頁面布局
+   - [x] Demo 頁面功能說明
    - [ ] 響應式設計優化
 
 3. 頁面路由
@@ -110,6 +111,7 @@ backend/               # FastAPI 後端專案
    - [x] Matchups 數據視覺化（漸層色表格）
    - [x] Matchups 比較功能
    - [x] 比較模式說明文字
+   - [x] Demo 模式（使用模擬數據）
    - [ ] 錯誤處理
    - [ ] 載入狀態
    - [x] 認證狀態管理 (layout.tsx)
@@ -168,6 +170,8 @@ NEXT_PUBLIC_API_URL= # 後端 API URL (前端配置)
    - [x] 優化認證流程
    - [x] 實作數據視覺化（Matchups）
    - [x] 實作比較功能（Matchups）
+   - [x] 優化比較模式 UI/UX
+   - [x] 實作 Demo 模式
    - [ ] 實作選聯盟功能（Matchups）
    - [ ] 實作選周次功能（Matchups）
    - [ ] 優化使用者體驗
