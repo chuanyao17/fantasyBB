@@ -28,7 +28,6 @@ class TokenValidatorMiddleware(BaseHTTPMiddleware):
             if token.is_expired():
                 # 嘗試刷新 token
                 new_token = await self.oauth.refresh_token(token.refresh_token)
-                
                 # 獲取響應
                 response = await call_next(request)
                 
@@ -61,6 +60,7 @@ class TokenValidatorMiddleware(BaseHTTPMiddleware):
         """檢查是否是公開路徑"""
         public_paths = {
             "/auth/yahoo/login",
+            "/auth/yahoo/logout",
             "/auth/yahoo/callback",
             "/docs",
             "/openapi.json"

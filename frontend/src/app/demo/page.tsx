@@ -1,4 +1,5 @@
 import MatchupComparison from "@/components/MatchupComparison";
+import MatchupsTable from "@/components/MatchupsTable";
 import { Matchup } from "@/types/matchups";
 
 const mockData: Matchup[] = [
@@ -16,59 +17,8 @@ const mockData: Matchup[] = [
   {"week":22,"name":"来找朋友的","stats":{"FG%":".438","FT%":".864","3PTM":"68","PTS":"542","REB":"154","AST":"84","ST":"25","BLK":"12","TO":"55"}}
 ];
 
-/**
- * 計算各欄位 (columns) 的最小值與最大值
- */
-function getMinMaxMap(data: Matchup[], columns: string[]) {
-  const minMax: Record<string, { min: number; max: number }> = {};
-
-  columns.forEach((col) => {
-    const values = data.map((item) => parseFloat(item.stats[col] || "0"));
-    const minVal = Math.min(...values);
-    const maxVal = Math.max(...values);
-    minMax[col] = { min: minVal, max: maxVal };
-  });
-
-  return minMax;
-}
-
-/**
- * 多段漸層的重點在 colorScale 函式。
- * 這裡示範「3 段」：紅 (#dc2626) → 黃 (#facc15) → 綠 (#22c55e)
- */
-function colorScale(
-  value: number,
-  minMax: { min: number; max: number },
-  reversed = false
-): string {
-  const { min, max } = minMax;
-  if (max === min) return "#1e293b"; // slate-900
-
-  let ratio = (value - min) / (max - min);
-  if (reversed) ratio = 1 - ratio;
-
-  const red    = { r: 185, g: 28,  b: 28  };  // red-700
-  const yellow = { r: 202, g: 138, b: 4   };  // yellow-600
-  const green  = { r: 21,  g: 128, b: 61  };  // green-700
-
-  if (ratio <= 0.5) {
-    const subRatio = ratio / 0.5;
-    const r = Math.round(red.r + (yellow.r - red.r) * subRatio);
-    const g = Math.round(red.g + (yellow.g - red.g) * subRatio);
-    const b = Math.round(red.b + (yellow.b - red.b) * subRatio);
-    return `rgb(${r}, ${g}, ${b})`;
-  } else {
-    const subRatio = (ratio - 0.5) / 0.5;
-    const r = Math.round(yellow.r + (green.r - yellow.r) * subRatio);
-    const g = Math.round(yellow.g + (green.g - yellow.g) * subRatio);
-    const b = Math.round(yellow.b + (green.b - yellow.b) * subRatio);
-    return `rgb(${r}, ${g}, ${b})`;
-  }
-}
-
 export default function DemoPage() {
   const columns = ["FG%", "FT%", "3PTM", "PTS", "REB", "AST", "ST", "BLK", "TO"];
-  const minMaxMap = getMinMaxMap(mockData, columns);
 
   return (
     <main className="min-h-screen pixel-bg">
@@ -98,48 +48,8 @@ export default function DemoPage() {
           </ul>
         </div>
 
-        {/* 原有的表格 */}
-        <div className="overflow-x-auto mx-auto">
-          <table className="table-auto border-collapse min-w-[900px] border border-gray-700 mx-auto">
-            <thead className="bg-slate-900">
-              <tr>
-                <th className="border border-gray-700 px-4 py-2 text-white text-sm pixel-text font-pixel-zh">
-                  Name
-                </th>
-                {columns.map((col) => (
-                  <th key={col} className="border border-gray-700 px-4 py-2 text-white text-sm pixel-text font-pixel-zh">
-                    {col}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {mockData.map((match, index) => (
-                <tr key={index} className="text-center">
-                  <td className="border border-gray-700 px-4 py-2 text-white text-sm pixel-text font-pixel-zh">
-                    {match.name}
-                  </td>
-                  {columns.map((col) => {
-                    const numericVal = parseFloat(match.stats[col] || "0");
-                    const bgColor = colorScale(numericVal, minMaxMap[col], col === "TO");
+        <MatchupsTable data={mockData} columns={columns} />
 
-                    return (
-                      <td
-                        key={col}
-                        className="border border-gray-700 px-4 py-2 text-sm pixel-text font-pixel-zh text-white"
-                        style={{ backgroundColor: bgColor }}
-                      >
-                        {match.stats[col]}
-                      </td>
-                    );
-                  })}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-
-        {/* 新增的比較表格 */}
         <div className="mt-12">
           <MatchupComparison 
             matchupsData={mockData} 
