@@ -63,6 +63,7 @@ class TokenValidatorMiddleware(BaseHTTPMiddleware):
             "/auth/yahoo/logout",
             "/auth/yahoo/callback",
             "/docs",
-            "/openapi.json"
+            "/openapi.json",
+            "/"
         }
         return path in public_paths
