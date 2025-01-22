@@ -1,0 +1,16 @@
+# 排除 Python 緩存文件
+__pycache__/
+
+# 排除虛擬環境
+venv/
+
+# 排除本地 HTTPS 測試證書
+cert.pem
+key.pem
+
+# 排除版本控制文件
+.git/
+.gitignore
+
+# 排除 .env
+.env

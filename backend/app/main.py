@@ -1,5 +1,4 @@
 """FastAPI 應用程式"""
-import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.middleware.token_validator import TokenValidatorMiddleware
@@ -29,11 +28,3 @@ async def root():
     """健康檢查"""
     return {"status": "ok"}
 
-if __name__ == "__main__":
-    uvicorn.run(
-        "app.main:app",
-        host="0.0.0.0",
-        port=8000,
-        ssl_keyfile="key.pem",
-        ssl_certfile="cert.pem"
-    ) 
