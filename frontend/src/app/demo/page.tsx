@@ -35,7 +35,7 @@ export default function DemoPage() {
           <ul className="text-slate-300 text-sm pixel-text space-y-2">
             <li>
               <span className="text-yellow-300">Top Table: </span>
-              Shows all teams' stats with color gradients indicating performance
+              Shows all teams&apos; stats with color gradients indicating performance
             </li>
             <li>
               <span className="text-yellow-300">Bottom Table: </span>

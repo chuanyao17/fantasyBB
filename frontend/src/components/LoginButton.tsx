@@ -11,7 +11,7 @@ export default function LoginButton() {
       onClick={handleLogin}
       className="pixel-button w-full py-3 px-4 text-white hover:text-yellow-300"
     >
-      > Login with Yahoo
+      {'>'} Login with Yahoo
     </button>
   );
 }

@@ -38,7 +38,7 @@ export default function Navbar({ isAuthenticated }: NavbarProps) {
                   }
                 `}
               >
-                > Matchups
+                {'>'} Matchups
               </Link>
               <Link 
                 href="/demo" 
@@ -46,7 +46,7 @@ export default function Navbar({ isAuthenticated }: NavbarProps) {
                   pathname === '/demo' ? 'text-yellow-300' : 'text-white hover:text-yellow-300'
                 } pixel-text text-sm`}
               >
-                > Demo
+                {'>'} Demo
               </Link>
             </div>
           </div>
