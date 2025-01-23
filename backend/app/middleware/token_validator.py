@@ -40,7 +40,7 @@ class TokenValidatorMiddleware(BaseHTTPMiddleware):
                     samesite="lax",
                     max_age=2592000  # 30 天
                 )
-                
+                print("Refresh token")
                 return response
             
             return await call_next(request)
@@ -62,6 +62,7 @@ class TokenValidatorMiddleware(BaseHTTPMiddleware):
             "/auth/yahoo/login",
             "/auth/yahoo/logout",
             "/auth/yahoo/callback",
+            "/auth/yahoo/test-refresh",
             "/docs",
             "/openapi.json",
             "/"
