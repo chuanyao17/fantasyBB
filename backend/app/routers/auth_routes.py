@@ -97,14 +97,16 @@ async def test_refresh(request: Request, response: Response):
 
 
 @router.get("/verify")
-async def verify_token(request: Request):
+async def verify_token(request: Request, response: Response, redirect: str = "/"):
     """檢查是否有 token cookie 目前是直接透過middleware檢查 未來可能需要調整"""
     print("verify_token")
+    
     # token_str = request.cookies.get("token")
     # if not token_str:
     #     raise HTTPException(status_code=401)
     # return {"status": "valid"} 
-    pass
+    frontend_redirect_url = f"{settings.FRONTEND_URL}{redirect}"
+    return RedirectResponse(url=frontend_redirect_url)
 
 
 @router.get("/logout")
