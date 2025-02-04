@@ -37,7 +37,7 @@ class TokenValidatorMiddleware(BaseHTTPMiddleware):
                     value=new_token.model_dump_json(),
                     httponly=True,
                     secure=True,
-                    samesite="lax",
+                    samesite="none",
                     max_age=2592000  # 30 天
                 )
                 print("Refresh token")

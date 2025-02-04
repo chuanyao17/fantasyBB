@@ -27,7 +27,7 @@ async def login(oauth: YahooOAuth = Depends()):
         value=state,
         httponly=True,
         secure=True,
-        samesite="lax",
+        samesite="none",
         max_age=300
     )
     return redirect_response
@@ -42,6 +42,7 @@ async def callback(
 ):
     """處理 Yahoo OAuth 回調"""
     if not oauth_state or oauth_state != state:
+        
         raise HTTPException(status_code=400, detail="Invalid state")
         
     try:
@@ -54,13 +55,13 @@ async def callback(
         )
         
         # 設置 cookies
-        redirect_response.delete_cookie(key="oauth_state", secure=True, httponly=True)
+        redirect_response.delete_cookie(key="oauth_state", secure=True, httponly=True, samesite="none")
         redirect_response.set_cookie(
             key="token",
             value=token.model_dump_json(),
             httponly=True,
             secure=True,
-            samesite="lax",
+            samesite="none",
             max_age=2592000  # 30 天
         )
         
@@ -86,7 +87,7 @@ async def test_refresh(request: Request, response: Response):
             value=token.model_dump_json(),
             httponly=True,
             secure=True,
-            samesite="lax",
+            samesite="none",
             max_age=2592000  # 30 天
         )
         
