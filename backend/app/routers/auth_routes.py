@@ -113,5 +113,5 @@ async def verify_token(request: Request, response: Response, redirect: str = "/"
 @router.get("/logout")
 async def logout(response: Response):
     """登出並清除 token"""
-    response.delete_cookie(key="token", secure=True, httponly=True)
+    response.delete_cookie(key="token", secure=True, httponly=True, samesite="none")
     return {"status": "logged out"}
