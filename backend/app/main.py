@@ -9,7 +9,7 @@ app = FastAPI()
 # CORS 設置
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://localhost:3000", "https://fantasy-bb.vercel.app"],
+    allow_origins=["https://localhost:3000", "https://fantasy-bb.vercel.app", "https://fantasy-bb.com", "https://api.fantasy-bb.com"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

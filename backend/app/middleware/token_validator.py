@@ -38,6 +38,7 @@ class TokenValidatorMiddleware(BaseHTTPMiddleware):
                     httponly=True,
                     secure=True,
                     samesite="none",
+                    domain=".fantasy-bb.com",
                     max_age=2592000  # 30 天
                 )
                 print("Refresh token")
