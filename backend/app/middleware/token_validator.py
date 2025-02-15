@@ -3,6 +3,7 @@ from fastapi import Request, Response
 from starlette.middleware.base import BaseHTTPMiddleware
 from app.models.token import Token
 from app.services.auth_service import YahooOAuth
+from app.config import settings
 from fastapi.responses import JSONResponse
 
 
@@ -19,7 +20,7 @@ class TokenValidatorMiddleware(BaseHTTPMiddleware):
         try:
             token_str = request.cookies.get("token")
             if not token_str:
-                print("No token found")
+                print("No token found during middleware")
                 return Response(status_code=401)
 
             token = Token.model_validate_json(token_str)
@@ -38,17 +39,17 @@ class TokenValidatorMiddleware(BaseHTTPMiddleware):
                     httponly=True,
                     secure=True,
                     samesite="none",
-                    domain=".fantasy-bb.com",
+                    domain=settings.COOKIE_DOMAIN if settings.COOKIE_DOMAIN else None,
                     max_age=2592000  # 30 天
                 )
-                print("Refresh token")
+                print("Refresh token during middleware")
                 return response
             
             return await call_next(request)
             
         except Exception:
             # 返回 401，讓前端處理重定向
-            print("exception")
+            print("exception during middleware")
             return JSONResponse(
                 status_code=401,
                 content={

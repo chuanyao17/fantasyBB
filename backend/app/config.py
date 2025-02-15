@@ -17,6 +17,7 @@ class Settings(BaseSettings):
     
     # 前端 URL 設置
     FRONTEND_URL: str
+    COOKIE_DOMAIN: str | None = None
     
     class Config:
         """配置設置"""
