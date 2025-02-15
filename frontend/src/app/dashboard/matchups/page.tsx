@@ -34,35 +34,26 @@ export default async function MatchupsPage() {
   const { matchupsData, token } = await getMatchupsData();
   const columns = ["FG%", "FT%", "3PTM", "PTS", "REB", "AST", "ST", "BLK", "TO"];
 
-  if (!matchupsData) {
-    return (
-      <div className="min-h-screen pixel-bg">
+  return (
+    <main className="min-h-screen pixel-bg">
+      {token && <RefreshToken token={token} />} {/* ✅ 確保 RefreshToken 在這裡 */}
+      {matchupsData ? (
+        <div className="font-[family-name:var(--font-press-start)] container mx-auto pt-20 pb-32 px-4">
+          <h1 className="text-xl mb-12 text-yellow-300 pixel-text text-center">
+            Matchups
+          </h1>
+          <MatchupsTable data={matchupsData} columns={columns} />
+          <div className="mt-12">
+            <MatchupComparison matchupsData={matchupsData} columns={columns} />
+          </div>
+        </div>
+      ) : (
         <div className="container mx-auto px-4 py-8">
           <div className="font-pixel-zh text-white text-center">
             Failed to load matchups data
           </div>
         </div>
-      </div>
-    );
-  }
-
-  return (
-    <main className="min-h-screen pixel-bg">
-      {token && <RefreshToken token={token} />}
-      <div className="font-[family-name:var(--font-press-start)] container mx-auto pt-20 pb-32 px-4">
-        <h1 className="text-xl mb-12 text-yellow-300 pixel-text text-center">
-          Matchups
-        </h1>
-
-        <MatchupsTable data={matchupsData} columns={columns} />
-
-        <div className="mt-12">
-          <MatchupComparison 
-            matchupsData={matchupsData} 
-            columns={columns} 
-          />
-        </div>
-      </div>
+      )}
     </main>
   );
 }

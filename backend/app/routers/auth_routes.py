@@ -28,7 +28,7 @@ async def login(oauth: YahooOAuth = Depends()):
         httponly=True,
         secure=True,
         samesite="none",
-        domain=".fantasy-bb.com",
+        domain=settings.COOKIE_DOMAIN if settings.COOKIE_DOMAIN else None,
         max_age=300
     )
     return redirect_response
@@ -56,14 +56,20 @@ async def callback(
         )
         
         # 設置 cookies
-        redirect_response.delete_cookie(key="oauth_state", secure=True, httponly=True, samesite="none", domain=".fantasy-bb.com")
+        redirect_response.delete_cookie(
+            key="oauth_state",
+            secure=True,
+            httponly=True,
+            samesite="none",
+            domain=settings.COOKIE_DOMAIN if settings.COOKIE_DOMAIN else None
+        )
         redirect_response.set_cookie(
             key="token",
             value=token.model_dump_json(),
             httponly=True,
             secure=True,
             samesite="none",
-            domain=".fantasy-bb.com",
+            domain=settings.COOKIE_DOMAIN if settings.COOKIE_DOMAIN else None,
             max_age=2592000  # 30 天
         )
         
@@ -83,14 +89,14 @@ async def test_refresh(request: Request, response: Response):
             
         token = Token.model_validate_json(token_str)
         token.token_time = 0
-        
+              
         response.set_cookie(
             key="token",
             value=token.model_dump_json(),
             httponly=True,
             secure=True,
             samesite="none",
-            domain=".fantasy-bb.com",
+            domain=settings.COOKIE_DOMAIN if settings.COOKIE_DOMAIN else None,
             max_age=2592000  # 30 天
         )
         
@@ -103,12 +109,7 @@ async def test_refresh(request: Request, response: Response):
 @router.get("/verify")
 async def verify_token(request: Request, response: Response, redirect: str = "/"):
     """檢查是否有 token cookie 目前是直接透過middleware檢查 未來可能需要調整"""
-    print("verify_token")
-    
-    # token_str = request.cookies.get("token")
-    # if not token_str:
-    #     raise HTTPException(status_code=401)
-    # return {"status": "valid"} 
+    print("verify_token api")
     frontend_redirect_url = f"{settings.FRONTEND_URL}{redirect}"
     return RedirectResponse(url=frontend_redirect_url)
 
@@ -116,5 +117,11 @@ async def verify_token(request: Request, response: Response, redirect: str = "/"
 @router.get("/logout")
 async def logout(response: Response):
     """登出並清除 token"""
-    response.delete_cookie(key="token", secure=True, httponly=True, samesite="none", domain=".fantasy-bb.com")
+    response.delete_cookie(
+        key="token",
+        secure=True,
+        httponly=True,
+        samesite="none",
+        domain=settings.COOKIE_DOMAIN if settings.COOKIE_DOMAIN else None
+        )
     return {"status": "logged out"}
