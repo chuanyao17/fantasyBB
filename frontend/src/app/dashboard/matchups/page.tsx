@@ -3,6 +3,7 @@ import { Matchup } from "@/types/matchups";
 import MatchupComparison from "@/components/MatchupComparison";
 import MatchupsTable from "@/components/MatchupsTable";
 import RefreshToken from "@/components/RefreshToken";
+import MatchupsSummaryTable from "@/components/MatchupsSummaryTable";
 
 /**
  * 從後端取得資料
@@ -45,6 +46,9 @@ export default async function MatchupsPage() {
           <MatchupsTable data={matchupsData} columns={columns} />
           <div className="mt-12">
             <MatchupComparison matchupsData={matchupsData} columns={columns} />
+          </div>
+          <div className="mt-12">
+            <MatchupsSummaryTable matchupsData={matchupsData} columns={columns} />
           </div>
         </div>
       ) : (
