@@ -118,7 +118,7 @@ export default function MatchupComparison({ matchupsData, columns }: MatchupComp
                             ${textColor}
                           `}
                         >
-                          {diff > 0 ? '+' : ''}{diff.toFixed(3)}
+                          {diff > 0 ? '+' : ''}{["FG%", "FT%"].includes(col) ? diff.toFixed(3) : diff.toFixed(0)}
                         </td>
                       );
                     })}
