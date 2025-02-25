@@ -40,7 +40,13 @@ export default function MatchupsSummaryTable({ matchupsData, columns }: Matchups
   });
 
   // 根據 W (勝場數) 進行降序排序
-  summaryData.sort((a, b) => b.wins - a.wins);
+  summaryData.sort((a, b) => {
+    if (b.wins !== a.wins) {
+      return b.wins - a.wins; // W 降序
+    }
+    return a.losses - b.losses; // W 相同時，L 升序（較少的排前面）
+  });
+  
 
   return (
     <div className="overflow-x-auto mx-auto mt-12">
