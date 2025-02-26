@@ -10,7 +10,7 @@ from app.config import settings
 
 class FantasyService:
     """處理 Yahoo Fantasy API 相關操作"""
-    
+   
     SKIP_STAT_IDS: Set[str] = {'9004003', '9007006'}
     
     def __init__(self, token: Token):
@@ -23,7 +23,9 @@ class FantasyService:
                 detail=f"Failed to initialize Fantasy API: {str(e)}"
             )
         
-    async def get_leagues(self) -> List[str]:
+    async def get_leagues(
+        self
+    ) -> List[str]:
         """獲取用戶的聯盟資訊"""
         try:
             return self.game.league_ids()
@@ -32,12 +34,29 @@ class FantasyService:
                 status_code=500,
                 detail=f"Failed to get leagues: {str(e)}"
             )
+    
+    async def get_teams_keys(
+        self,
+        league_id: Union[str, None] = None
+    ) -> List[str]:
+        """獲取用戶的聯盟所有隊伍的key"""
+        try:
+            league_id = league_id or settings.DEFAULT_LEAGUE_ID
+            league = self.game.to_league(league_id)
+            all_teams = league.teams()
+            all_keys = list(all_teams.keys())
+            return all_keys
+        except Exception as e:
+            raise HTTPException(
+                status_code=500,
+                detail=f"Failed to get teams'keys: {str(e)}"
+            )
         
     async def get_team_info(
-        self, 
+        self,
         league_id: Union[str, None] = None
     ) -> Dict[str, str]:
-        """獲取隊伍資訊"""
+        """獲取自己隊伍資訊"""
         try:
             league_id = league_id or settings.DEFAULT_LEAGUE_ID
             league = self.game.to_league(league_id)
@@ -51,7 +70,87 @@ class FantasyService:
                 status_code=500,
                 detail=f"Failed to get team info: {str(e)}"
             )
-        
+
+    async def get_matchup_team_info(
+        self,
+        team_key: Union[str, None] = None,
+        week: Union[int, None] = None,
+        league_id: Union[str, None] = None
+    ) -> Dict[str, Any]:
+        """獲取指定隊伍在某週的對手隊伍資訊"""
+        try:
+            league_id = league_id or settings.DEFAULT_LEAGUE_ID
+            league = self.game.to_league(league_id)
+            
+            # 如果 week 沒有提供，則使用當前週數
+            if week is None:
+                week = await self.get_current_week(league_id)
+            
+            # 如果 team_key 沒提供，預設為當前使用者的隊伍
+            team_key = team_key or league.team_key()
+            
+            # 取得指定隊伍的比賽對手
+            team = league.to_team(team_key)
+            matchup_opponent_key = team.matchup(week)
+            
+            # 獲取對手的完整資訊
+            opponent_team = league.to_team(matchup_opponent_key)
+            opponent_team_info = opponent_team.details()
+            
+            return opponent_team_info
+
+        except Exception as e:
+            raise HTTPException(
+                status_code=500,
+                detail=f"Failed to get matchup team info: {str(e)}"
+            )
+            
+    async def get_matchup_team_name(
+        self,
+        team_key: Union[str, None] = None,
+        week: Union[int, None] = None,
+        league_id: Union[str, None] = None
+    ) -> str:
+        """獲取指定隊伍在某週的對手隊伍名稱"""
+        try:
+            opponent_info = await self.get_matchup_team_info(team_key, week, league_id)
+            return opponent_info.get("name", "Unknown Opponent")
+        except Exception as e:
+            raise HTTPException(
+                status_code=500,
+                detail=f"Failed to get matchup's name: {str(e)}"
+            )
+            
+    async def get_all_matchups_team_name(
+        self, 
+        league_id: Union[str, None] = None, 
+        week: Union[int, None] = None
+    ) -> Dict[str, str]:
+        """獲取聯盟內所有隊伍的對手隊伍名稱（以隊伍名稱作為 key）"""
+        try:
+            league_id = league_id or settings.DEFAULT_LEAGUE_ID
+            all_keys = await self.get_teams_keys(league_id)  # 獲取所有隊伍 keys
+            print(all_keys)
+            matchups_dict = {}
+
+            for team_key in all_keys:
+                # 取得該隊伍的名稱
+                team_info = self.game.to_league(league_id).to_team(team_key).details()
+                team_name = team_info.get("name", "Unknown Team")
+
+                # 取得該隊伍的對手名稱
+                opponent_name = await self.get_matchup_team_name(team_key, week, league_id)
+
+                # 以隊伍名稱作為 key，對手名稱作為 value
+                matchups_dict[team_name] = opponent_name
+            return matchups_dict
+
+        except Exception as e:
+            raise HTTPException(
+                status_code=500,
+                detail=f"Failed to get all matchups: {str(e)}"
+            )
+
     async def get_roster(
         self, 
         league_id: Union[str, None] = None
