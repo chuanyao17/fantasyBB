@@ -1,14 +1,9 @@
 import { cookies } from "next/headers";
 import { Matchup } from "@/types/matchups";
-import MatchupComparison from "@/components/MatchupComparison";
-import MatchupsTable from "@/components/MatchupsTable";
+import MatchupsClient from "@/components/MatchupsClient";
 import RefreshToken from "@/components/RefreshToken";
-import MatchupsSummaryTable from "@/components/MatchupsSummaryTable";
 
-/**
- * 從後端取得資料
- */
-async function getMatchupsData(): Promise<{ matchupsData: Matchup[] | null; token: string | null }>  {
+async function fetchMatchupsData(): Promise<{ matchupsData: Matchup[] | null; token: string | null }> {
   const cookieStore = await cookies();
   const token = cookieStore.get("token")?.value;
 
@@ -32,32 +27,12 @@ async function getMatchupsData(): Promise<{ matchupsData: Matchup[] | null; toke
 }
 
 export default async function MatchupsPage() {
-  const { matchupsData, token } = await getMatchupsData();
-  const columns = ["FG%", "FT%", "3PTM", "PTS", "REB", "AST", "ST", "BLK", "TO"];
+  const { matchupsData, token } = await fetchMatchupsData();
 
   return (
     <main className="min-h-screen pixel-bg">
-      {token && <RefreshToken token={token} />} {/* ✅ 確保 RefreshToken 在這裡 */}
-      {matchupsData ? (
-        <div className="font-[family-name:var(--font-press-start)] container mx-auto pt-20 pb-32 px-4">
-          <h1 className="text-xl mb-12 text-yellow-300 pixel-text text-center">
-            Matchups
-          </h1>
-          <MatchupsTable data={matchupsData} columns={columns} />
-          <div className="mt-12">
-            <MatchupComparison matchupsData={matchupsData} columns={columns} />
-          </div>
-          <div className="mt-12">
-            <MatchupsSummaryTable matchupsData={matchupsData} columns={columns} />
-          </div>
-        </div>
-      ) : (
-        <div className="container mx-auto px-4 py-8">
-          <div className="font-pixel-zh text-white text-center">
-            Failed to load matchups data
-          </div>
-        </div>
-      )}
+      {token && <RefreshToken token={token} />}
+      <MatchupsClient initialMatchups={matchupsData} />
     </main>
   );
 }
