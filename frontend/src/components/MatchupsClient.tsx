@@ -113,8 +113,8 @@ export default function MatchupsClient() {
             <div className="mb-6 flex justify-center">
               <button
                 onClick={() => setShowPowerRank((prev) => !prev)}
-                className="pixel-text font-pixel-zh text-sm bg-slate-800 text-yellow-300 border border-gray-700 px-4 py-2 hover:border-yellow-300 hover:bg-slate-700 transition duration-150"className={`pixel-text font-pixel-zh text-sm text-yellow-300 border border-gray-700 px-4 py-2 rounded-sm 
-                  hover:translate-y-[1px] hover:shadow-inner hover:border-yellow-300 active:translate-y-[2px] transition duration-150`}                
+                className="pixel-text font-pixel-zh text-sm text-yellow-300 border border-gray-700 px-4 py-2 rounded-sm 
+                          hover:translate-y-[1px] hover:shadow-inner hover:border-yellow-300 active:translate-y-[2px] transition duration-150"                
               >
                 {showPowerRank ? "Back to Weekly Summary" : "Show Power Rank"}
               </button>
