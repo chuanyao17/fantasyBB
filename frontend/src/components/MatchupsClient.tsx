@@ -6,6 +6,7 @@ import MatchupComparison from "@/components/MatchupComparison";
 import MatchupsTable from "@/components/MatchupsTable";
 import MatchupsSummaryTable from "@/components/MatchupsSummaryTable";
 import MatchupsPowerRank from "@/components/MatchupsPowerRank";
+import MatchupsPowerRankButton from "@/components/MatchupsPowerRankButton";
 
 const columns = ["FG%", "FT%", "3PTM", "PTS", "REB", "AST", "ST", "BLK", "TO"];
 
@@ -40,14 +41,28 @@ export default function MatchupsClient() {
     fetchInitialData();
   }, []);
 
+  async function fetchWithRetry(url: string, options: RequestInit = {}, retries = 3, delay = 1000): Promise<any> {
+    for (let i = 0; i < retries; i++) {
+      try {
+        const res = await fetch(url, options);
+        if (!res.ok) throw new Error(`Status ${res.status}`);
+        return await res.json();
+      } catch (err) {
+        console.warn(`Fetch failed (attempt ${i + 1}):`, err);
+        if (i < retries - 1) await new Promise(r => setTimeout(r, delay));
+      }
+    }
+    throw new Error(`Failed to fetch ${url} after ${retries} attempts`);
+  }
+
   async function fetchMatchups(weekNum: number) {
+    const url = `${process.env.NEXT_PUBLIC_API_URL}/fantasy/matchups?week=${weekNum}`;
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/fantasy/matchups?week=${weekNum}`, {
+      const data = await fetchWithRetry(url, {
         cache: "no-store",
         credentials: "include",
       });
-      if (!res.ok) throw new Error("Failed to fetch matchups");
-      setMatchupsData(await res.json());
+      setMatchupsData(data);
     } catch (error) {
       console.error("Error fetching matchups:", error);
       setMatchupsData(null);
@@ -55,22 +70,18 @@ export default function MatchupsClient() {
   }
 
   async function fetchAllWeeksData(maxWeek: number) {
-    const allData: Matchup[][] = [];
+    const weekPromises = Array.from({ length: maxWeek }, (_, i) => {
+      const weekNum = i + 1;
+      const url = `${process.env.NEXT_PUBLIC_API_URL}/fantasy/matchups?week=${weekNum}`;
 
-    for (let w = 1; w <= maxWeek; w++) {
-      try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/fantasy/matchups?week=${w}`, {
-          cache: "no-store",
-          credentials: "include",
+      return fetchWithRetry(url, { cache: "no-store", credentials: "include" })
+        .catch(err => {
+          console.error(`❌ Week ${weekNum} failed after retry:`, err);
+          return [];
         });
-        const data = await res.json();
-        allData.push(data);
-      } catch (err) {
-        console.error(`Error fetching week ${w}:`, err);
-        allData.push([]);
-      }
-    }
+    });
 
+    const allData = await Promise.all(weekPromises);
     setAllWeeksData(allData);
   }
 
@@ -88,7 +99,7 @@ export default function MatchupsClient() {
               const selectedWeek = Number(e.target.value);
               setWeek(selectedWeek);
               fetchMatchups(selectedWeek);
-              setShowPowerRank(false); // 切換週數時回到 Summary
+              setShowPowerRank(false);
             }}
             className="bg-slate-800 text-white text-sm pixel-text min-w-[150px] px-2 py-1 border border-gray-700 cursor-pointer hover:border-yellow-300"
           >
@@ -108,16 +119,11 @@ export default function MatchupsClient() {
             <MatchupComparison matchupsData={matchupsData} columns={columns} />
           </div>
 
-          {/* Summary / Power Rank 切換區塊 */}
           <div className="mt-12">
             <div className="mb-6 flex justify-center">
-              <button
-                onClick={() => setShowPowerRank((prev) => !prev)}
-                className="pixel-text font-pixel-zh text-sm text-yellow-300 border border-gray-700 px-4 py-2 rounded-sm 
-                          hover:translate-y-[1px] hover:shadow-inner hover:border-yellow-300 active:translate-y-[2px] transition duration-150"                
-              >
+              <MatchupsPowerRankButton onClick={() => setShowPowerRank((prev) => !prev)}>
                 {showPowerRank ? "Back to Weekly Summary" : "Show Power Rank"}
-              </button>
+              </MatchupsPowerRankButton>
             </div>
 
             {showPowerRank ? (
