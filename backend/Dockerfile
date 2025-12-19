@@ -14,5 +14,5 @@ COPY . .
 # 開放應用的端口
 EXPOSE 8080
 
-# 使用 uvicorn 啟動 FastAPI，支援 HTTPS
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8080"]
+# 使用 uvicorn 啟動 FastAPI
+CMD ["sh", "-c", "uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8080}"]
